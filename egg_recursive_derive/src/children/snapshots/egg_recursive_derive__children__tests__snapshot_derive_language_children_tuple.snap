@@ -1,0 +1,7 @@
+---
+source: egg_recursive_derive/src/children.rs
+expression: tt
+---
+::core::compile_error! {
+    "expected one of: `struct`, `enum`, `union`"
+}

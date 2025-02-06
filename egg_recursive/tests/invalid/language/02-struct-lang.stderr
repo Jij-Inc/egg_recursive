@@ -1,0 +1,7 @@
+error: expected enum
+ --> tests/invalid/language/02-struct-lang.rs:4:1
+  |
+4 | / pub struct StructLang {
+5 | |     int: i64,
+6 | | }
+  | |_^

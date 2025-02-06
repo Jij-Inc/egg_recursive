@@ -1,0 +1,126 @@
+---
+source: egg_recursive_derive/src/children.rs
+expression: tt
+---
+///The implementation tag of [`Functor`] for [`Test`]. Generated via `#[derive(LanguageChildren)]`
+pub enum TestImpl {}
+impl<T> Test<T> {
+    pub fn map<U, F>(self, mut f: F) -> Test<U>
+    where
+        F: FnMut(T) -> U,
+    {
+        let Self { myarg, clauses, variadics, last } = self;
+        let myarg = f(myarg);
+        let clauses = clauses.map(&mut f);
+        let variadics = variadics.into_iter().map(&mut f).collect();
+        let last = f(last);
+        Test {
+            myarg,
+            clauses,
+            variadics,
+            last,
+        }
+    }
+}
+impl ::egg_recursive::Functor for TestImpl {
+    type Container<T> = Test<T>;
+    fn fmap<A, B, F>(mut f: F, x: Self::Container<A>) -> Self::Container<B>
+    where
+        F: FnMut(A) -> B,
+    {
+        x.map(f)
+    }
+}
+///An array-like representation of [`Test`], which is used with egg functions. Generated via `#[derive(LanguageChildren)]`
+#[derive(PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Debug)]
+pub struct RawTest<T>(pub ::std::vec::Vec<T>);
+impl ::egg::LanguageChildren for RawTest<::egg::Id> {
+    fn len(&self) -> usize {
+        self.0.len()
+    }
+    fn can_be_length(n: usize) -> bool {
+        n >= 5usize
+    }
+    fn from_vec(v: Vec<::egg::Id>) -> Self {
+        Self(v)
+    }
+    fn as_slice(&self) -> &[::egg::Id] {
+        self.0.as_slice()
+    }
+    fn as_mut_slice(&mut self) -> &mut [::egg::Id] {
+        self.0.as_mut_slice()
+    }
+}
+///The implementation tag of [`Functor`] for [`RawTest`]. Generated via `#[derive(LanguageChildren)]`
+pub enum RawTestImpl {}
+impl<T> RawTest<T> {
+    pub fn map<U, F>(self, mut f: F) -> RawTest<U>
+    where
+        F: FnMut(T) -> U,
+    {
+        RawTest(self.0.into_iter().map(f).collect())
+    }
+}
+impl ::egg_recursive::Functor for RawTestImpl {
+    type Container<T> = RawTest<T>;
+    fn fmap<A, B, F>(mut f: F, x: Self::Container<A>) -> Self::Container<B>
+    where
+        F: FnMut(A) -> B,
+    {
+        x.map(f)
+    }
+}
+impl<T> ::std::convert::From<Test<T>> for RawTest<T> {
+    fn from(orig: Test<T>) -> Self {
+        let mut vec = Vec::new();
+        vec.push(orig.myarg);
+        vec.extend(orig.clauses);
+        vec.extend(orig.variadics);
+        vec.push(orig.last);
+        Self(vec.try_into().map_err(|_| "impossible").unwrap())
+    }
+}
+impl<T> ::std::convert::From<RawTest<T>> for Test<T> {
+    fn from(wrapper: RawTest<T>) -> Self {
+        let len = wrapper.0.len();
+        let mut iter = wrapper.0.into_iter();
+        Self {
+            myarg: iter.next().unwrap(),
+            clauses: iter
+                .by_ref()
+                .take(3usize)
+                .collect::<Vec<_>>()
+                .try_into()
+                .map_err(|_| "impossible")
+                .unwrap(),
+            variadics: iter.by_ref().take(len - 5usize).collect(),
+            last: iter.next().unwrap(),
+        }
+    }
+}
+impl<T> ::egg_recursive::IntoLanguageChildren for Test<T> {
+    type View = TestImpl;
+    type RawData = RawTestImpl;
+    type Param = T;
+    fn unview<U>(input: Test<U>) -> RawTest<U> {
+        input.into()
+    }
+    fn view<U>(wrapper: RawTest<U>) -> Test<U> {
+        wrapper.into()
+    }
+    fn raw_as_refs<'a, U>(input: &'a RawTest<U>) -> RawTest<&'a U> {
+        let RawTest(input) = input;
+        let input = input.iter().collect();
+        RawTest(input)
+    }
+}
+impl<T> RawTest<T> {
+    pub fn view(self) -> Test<T> {
+        self.into()
+    }
+}
+impl<T> Test<T> {
+    pub fn unview(self) -> RawTest<T> {
+        self.into()
+    }
+}

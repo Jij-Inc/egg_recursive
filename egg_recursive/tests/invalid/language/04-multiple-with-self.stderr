@@ -1,0 +1,5 @@
+error: recursive and non-recursive fields cannot be mixed
+ --> tests/invalid/language/04-multiple-with-self.rs:7:8
+  |
+7 |     Mul(i64, Box<Self>),
+  |        ^^^^^^^^^^^^^^^^

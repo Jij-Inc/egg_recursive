@@ -1,0 +1,191 @@
+---
+source: egg_recursive_derive/src/language/tests.rs
+expression: pat
+---
+impl ::egg_recursive::Recursive for MyLang {
+    fn wrap(x: Self::Container<Self>) -> Self {
+        match x {
+            MyLangSig::Int(__arg_0) => MyLang::Int(__arg_0),
+            MyLangSig::Neg(__inner) => MyLang::Neg(Box::new(__inner)),
+            MyLangSig::Add { args } => {
+                MyLang::Add {
+                    args: args.map(Box::new),
+                }
+            }
+            MyLangSig::And(__inner) => MyLang::And(__inner.map(Box::new)),
+            MyLangSig::Wth(__arg_0, __arg_1) => MyLang::Wth(__arg_0, __arg_1),
+            MyLangSig::Or(__inner) => {
+                MyLang::Or(
+                    <<BinOpArgs<
+                        ::egg::Id,
+                    > as ::egg_recursive::IntoLanguageChildren>::View as ::egg_recursive::Functor>::fmap(
+                        Box::new,
+                        <BinOpArgs<
+                            ::egg::Id,
+                        > as ::egg_recursive::IntoLanguageChildren>::view(__inner),
+                    ),
+                )
+            }
+            MyLangSig::List { elems } => MyLang::List { elems: elems },
+            MyLangSig::Bool { lit } => MyLang::Bool { lit },
+            MyLangSig::Surreal { l, r } => MyLang::Surreal { l, r },
+            MyLangSig::If(__inner) => {
+                MyLang::If(
+                    <<IfThenElse<
+                        ::egg::Id,
+                    > as ::egg_recursive::IntoLanguageChildren>::View as ::egg_recursive::Functor>::fmap(
+                        Box::new,
+                        <IfThenElse<
+                            ::egg::Id,
+                        > as ::egg_recursive::IntoLanguageChildren>::view(__inner),
+                    ),
+                )
+            }
+            MyLangSig::Null => MyLang::Null,
+        }
+    }
+    fn unwrap(self) -> Self::Container<Self> {
+        match self {
+            MyLang::Int(__arg_0) => MyLangSig::Int(__arg_0),
+            MyLang::Neg(__inner) => MyLangSig::Neg(*__inner),
+            MyLang::Add { args } => {
+                MyLangSig::Add {
+                    args: args.map(|b| *b),
+                }
+            }
+            MyLang::And(__inner) => MyLangSig::And(__inner.map(|b| *b)),
+            MyLang::Wth(__arg_0, __arg_1) => MyLangSig::Wth(__arg_0, __arg_1),
+            MyLang::Or(__inner) => {
+                MyLangSig::Or(
+                    <<BinOpArgs<
+                        ::egg::Id,
+                    > as ::egg_recursive::IntoLanguageChildren>::RawData as ::egg_recursive::Functor>::fmap(
+                        |b| *b,
+                        <BinOpArgs<
+                            ::egg::Id,
+                        > as ::egg_recursive::IntoLanguageChildren>::unview(__inner),
+                    ),
+                )
+            }
+            MyLang::List { elems } => MyLangSig::List { elems: elems },
+            MyLang::Bool { lit } => MyLangSig::Bool { lit },
+            MyLang::Surreal { l, r } => MyLangSig::Surreal { l, r },
+            MyLang::If(__inner) => {
+                MyLangSig::If(
+                    <<IfThenElse<
+                        ::egg::Id,
+                    > as ::egg_recursive::IntoLanguageChildren>::RawData as ::egg_recursive::Functor>::fmap(
+                        |b| *b,
+                        <IfThenElse<
+                            ::egg::Id,
+                        > as ::egg_recursive::IntoLanguageChildren>::unview(__inner),
+                    ),
+                )
+            }
+            MyLang::Null => MyLangSig::Null,
+        }
+    }
+    fn sclone<T: Clone>(x: &Self::Container<T>) -> Self::Container<T> {
+        match x {
+            MyLangSig::Int(__arg_0) => MyLangSig::Int(__arg_0.clone()),
+            MyLangSig::Neg(x) => MyLangSig::Neg(x.clone()),
+            MyLangSig::Add { args } => {
+                MyLangSig::Add {
+                    args: args.clone(),
+                }
+            }
+            MyLangSig::And(x) => MyLangSig::And(x.clone()),
+            MyLangSig::Wth(__arg_0, __arg_1) => {
+                MyLangSig::Wth(__arg_0.clone(), __arg_1.clone())
+            }
+            MyLangSig::Or(x) => MyLangSig::Or(x.clone()),
+            MyLangSig::List { elems } => {
+                MyLangSig::List {
+                    elems: elems.clone(),
+                }
+            }
+            MyLangSig::Bool { lit } => {
+                MyLangSig::Bool {
+                    lit: lit.clone(),
+                }
+            }
+            MyLangSig::Surreal { l, r } => {
+                MyLangSig::Surreal {
+                    l: l.clone(),
+                    r: r.clone(),
+                }
+            }
+            MyLangSig::If(x) => MyLangSig::If(x.clone()),
+            MyLangSig::Null => MyLangSig::Null,
+        }
+    }
+    fn sig_each_ref<T>(
+        sig: &::egg_recursive::Signature<Self, T>,
+    ) -> ::egg_recursive::Signature<Self, &T> {
+        match sig {
+            MyLangSig::Int(__self_0) => {
+                MyLangSig::Int(::std::clone::Clone::clone(__self_0))
+            }
+            MyLangSig::Neg(__inner) => {
+                MyLangSig::Neg(
+                    <::egg::Id as ::egg_recursive::IntoLanguageChildren>::raw_as_refs(
+                        __inner,
+                    ),
+                )
+            }
+            MyLangSig::Add { args } => {
+                MyLangSig::Add {
+                    args: <[::egg::Id; 2usize] as ::egg_recursive::IntoLanguageChildren>::raw_as_refs(
+                        args,
+                    ),
+                }
+            }
+            MyLangSig::And(__inner) => {
+                MyLangSig::And(
+                    <[::egg::Id; 2usize] as ::egg_recursive::IntoLanguageChildren>::raw_as_refs(
+                        __inner,
+                    ),
+                )
+            }
+            MyLangSig::Wth(__self_0, __self_1) => {
+                MyLangSig::Wth(
+                    ::std::clone::Clone::clone(__self_0),
+                    ::std::clone::Clone::clone(__self_1),
+                )
+            }
+            MyLangSig::Or(__inner) => {
+                MyLangSig::Or(
+                    <BinOpArgs<
+                        T,
+                    > as ::egg_recursive::IntoLanguageChildren>::raw_as_refs(__inner),
+                )
+            }
+            MyLangSig::List { elems } => {
+                MyLangSig::List {
+                    elems: <::std::vec::Vec<
+                        ::egg::Id,
+                    > as ::egg_recursive::IntoLanguageChildren>::raw_as_refs(elems),
+                }
+            }
+            MyLangSig::Bool { lit } => {
+                MyLangSig::Bool {
+                    lit: ::std::clone::Clone::clone(lit),
+                }
+            }
+            MyLangSig::Surreal { l, r } => {
+                MyLangSig::Surreal {
+                    l: ::std::clone::Clone::clone(l),
+                    r: ::std::clone::Clone::clone(r),
+                }
+            }
+            MyLangSig::If(__inner) => {
+                MyLangSig::If(
+                    <IfThenElse<
+                        T,
+                    > as ::egg_recursive::IntoLanguageChildren>::raw_as_refs(__inner),
+                )
+            }
+            MyLangSig::Null => MyLangSig::Null,
+        }
+    }
+}

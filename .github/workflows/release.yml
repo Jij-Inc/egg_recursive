@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags: ['*']
+
+jobs:
+  publish:
+    name: Release to Crates.io
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Install Workspaces tool
+      run: cargo install cargo-workspaces
+    - name: Release
+      run: cargo workspaces publish --from-git --yes
+      env:
+        CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+  bump_version:
+    name: Bump Package Version
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Workspaces tool
+        run: cargo install cargo-workspaces
+
+      - name: Bump version
+        run: |
+          OLD_VERSION=$(cargo metadata --format-version=1 --no-deps | jq --raw-output '.packages[0].version')
+          STAMP=$(date +%Y%m%d-%H%M%S)
+          BRANCH="release/bump-${OLD_VERSION}-${STAMP}"
+          echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
+          echo "OLD_VERSION=${OLD_VERSION}" >> $GITHUB_ENV
+
+          git switch -c "${BRANCH}"
+
+          cargo workspaces version --yes patch --no-git-tag --no-git-push
+
+          NEW_VERSION=$(cargo metadata --format-version=1 --no-deps | jq --raw-output '.packages[0].version')
+          echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+      - name: Open Pull Request
+        run: >
+          gh pr create
+          --title "Bump Version to ${{env.NEW_VERSION}}"
+          --base main
+          --body "Bump version from ${{env.OLD_VERSION}} to ${{env.NEW_VERSION}}"

@@ -1,0 +1,5 @@
+error: Recusive type should be one of the form: Box<Self>, Vec<Self>, [Box<Self>; N], or T<Box<Self>>
+  --> tests/invalid/language/03-invalid-children.rs:12:9
+   |
+12 |     Add(Box<Bin<Self>>),
+   |         ^^^^^^^^^^^^^^
