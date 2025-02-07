@@ -14,6 +14,5 @@ egg.workspace = true
 functo_rs.workspace = true
 
 [dev-dependencies]
-egg.workspace = true
 ordered-float.workspace = true
 trybuild.workspace = true
