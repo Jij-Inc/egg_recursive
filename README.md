@@ -1,6 +1,5 @@
 # egg_recursive ![badge](https://github.com/Jij-Inc/egg_recursive/actions/workflows/test.yml/badge.svg)
 
-
 An S-expression-free, alternative interface for [`egg`][egg].
 
 | crate name | crates.io | docs.rs |
