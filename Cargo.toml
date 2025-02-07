@@ -3,7 +3,7 @@ members = ["egg_recursive_derive", "egg_recursive"]
 resolver = "2"
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.1"
 description = "A recursive interface for egg: e-graphs good without S-expresion!"
 edition = "2021"
 keywords = ["e-graphs"]

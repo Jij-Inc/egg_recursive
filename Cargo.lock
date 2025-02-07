@@ -73,7 +73,7 @@ dependencies = [
 
 [[package]]
 name = "egg_recursive"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "egg",
  "egg_recursive_derive",
@@ -84,7 +84,7 @@ dependencies = [
 
 [[package]]
 name = "egg_recursive_derive"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "ident_case",
  "insta",
