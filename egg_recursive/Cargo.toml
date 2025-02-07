@@ -9,7 +9,7 @@ readme.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-egg_recursive_derive = { path = "../egg_recursive_derive", version = "0.1.0" }
+egg_recursive_derive = { path = "../egg_recursive_derive", version = "0.1.1" }
 egg.workspace = true
 functo_rs.workspace = true
 
