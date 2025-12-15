@@ -1,16 +1,16 @@
 [package]
 name = "egg_recursive"
 version.workspace = true
-description.workspace = true
 edition.workspace = true
-keywords.workspace = true
-license.workspace = true
-readme.workspace = true
 rust-version.workspace = true
+description.workspace = true
+readme.workspace = true
+license.workspace = true
+keywords.workspace = true
 
 [dependencies]
-egg_recursive_derive = { path = "../egg_recursive_derive", version = "0.1.1" }
 egg.workspace = true
+egg_recursive_derive = { path = "../egg_recursive_derive", version = "0.2.0" }
 functo_rs.workspace = true
 
 [dev-dependencies]
