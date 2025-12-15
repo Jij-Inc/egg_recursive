@@ -5,7 +5,7 @@ members = ["egg_recursive", "egg_recursive_derive"]
 [workspace.package]
 version = "0.2.0"
 edition = "2021"
-rust-version = "1.80"
+rust-version = "1.82"
 description = "A recursive interface for egg: e-graphs good without S-expresion!"
 readme = "README.md"
 repository = "https://github.com/Jij-Inc/egg_recursive"
