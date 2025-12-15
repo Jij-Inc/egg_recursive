@@ -735,7 +735,6 @@ impl LangVariant {
                             .collect::<Vec<_>>();
                         let (bind_l, bind_r): (Vec<_>, Vec<_>) = names
                             .iter()
-                            .cloned()
                             .map(|(orig, l, r)| (quote! { #orig: #l }, quote! { #orig: #r}))
                             .unzip();
 
