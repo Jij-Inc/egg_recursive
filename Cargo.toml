@@ -1,19 +1,19 @@
 [workspace]
-members = ["egg_recursive_derive", "egg_recursive"]
 resolver = "2"
+members = ["egg_recursive", "egg_recursive_derive"]
 
 [workspace.package]
-version = "0.1.1"
-description = "A recursive interface for egg: e-graphs good without S-expresion!"
+version = "0.2.0"
 edition = "2021"
-keywords = ["e-graphs"]
-license = "MIT OR Apache-2.0"
+rust-version = "1.80"
+description = "A recursive interface for egg: e-graphs good without S-expresion!"
 readme = "README.md"
 repository = "https://github.com/Jij-Inc/egg_recursive"
-rust-version = "1.80"
+license = "MIT OR Apache-2.0"
+keywords = ["e-graphs"]
 
 [workspace.dependencies]
-egg = "0.10.0"
+egg = "0.11.0"
 functo_rs = "0.1.0"
 ident_case = "1.0.1"
 insta = "1.42.1"
@@ -22,9 +22,8 @@ ordered-float = "3.4.0"
 prettyplease = "0.2.29"
 proc-macro2 = "1.0.93"
 quote = "1.0.38"
-syn = { version = "2.0.98", features = ["visit", "full", "extra-traits"] }
+syn = { version = "2.0.98", features = ["extra-traits", "full", "visit"] }
 trybuild = "1.0.0"
-
 
 [profile.dev.package]
 insta.opt-level = 3

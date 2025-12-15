@@ -236,7 +236,7 @@ where
         egraph: &EGraph<AsLanguage<L>, N>,
         eclass: Id,
         limit: usize,
-    ) -> Option<::egg::SearchMatches<AsLanguage<L>>> {
+    ) -> Option<::egg::SearchMatches<'_, AsLanguage<L>>> {
         use ::egg::*;
         let pat: Pattern<AsLanguage<L>> = Pattern::from(self);
         let SearchMatches {
