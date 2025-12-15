@@ -165,7 +165,7 @@ pub enum Value {
 impl Analysis<EggArithExpr> for ConstantFold {
     type Data = Option<Value>;
 
-    fn make(egraph: &mut EGraph<EggArithExpr, Self>, enode: &EggArithExpr, id: Id) -> Self::Data {
+    fn make(egraph: &mut EGraph<EggArithExpr, Self>, enode: &EggArithExpr, _id: Id) -> Self::Data {
         use ArithExprSig::*;
         match enode {
             Var(_) => None,
